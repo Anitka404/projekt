@@ -99,15 +99,39 @@ def delete_employee(employee_id: int) -> None:  # Definiuje funkcje usuwajaca pr
             database["employees"].remove(employee)  # Usuwa pracownika z listy.
     save_changes()  # Zapisuje zmiany do pliku.
 
-def filter_items(items: list, text: str) -> list:  # Definiuje funkcje filtrujaca liste po nazwie lub miescie.
+def filter_items(items: list, text: str) -> list:  # Definiuje funkcje filtrujaca liste po dowolnym polu rekordu.
     results = []  # Tworzy pusta liste wynikow.
     text = text.lower()  # Zamienia tekst filtra na male litery.
+    if text == "":  # Sprawdza, czy filtr jest pusty.
+        return items  # Zwraca cala liste, gdy uzytkownik nic nie wpisal.
     for item in items:  # Przechodzi po elementach listy.
-        name = str(item.get("name", "")).lower()  # Pobiera nazwe elementu i zamienia ja na male litery.
-        city = str(item.get("city", "")).lower()  # Pobiera miasto elementu i zamienia je na male litery.
-        if text in name or text in city:  # Sprawdza, czy filtr pasuje do nazwy albo miasta.
-            results.append(item)  # Dodaje pasujacy element do wynikow.
+        for value in item.values():  # Przechodzi po wszystkich wartosciach wybranego rekordu.
+            value_text = str(value).lower()  # Zamienia wartosc rekordu na tekst malymi literami.
+            if text in value_text:  # Sprawdza, czy filtr pasuje do tej wartosci.
+                results.append(item)  # Dodaje pasujacy element do wynikow.
+                break  # Przerywa sprawdzanie tego rekordu, aby nie dodac go drugi raz.
     return results  # Zwraca przefiltrowana liste.
+
+def get_company_ids_by_filter(text: str) -> list:  # Definiuje funkcje zwracajaca id firm pasujacych do filtra.
+    companies = filter_items(database["companies"], text)  # Filtruje firmy po wpisanym tekscie.
+    company_ids = []  # Tworzy pusta liste id firm.
+    for company in companies:  # Przechodzi po pasujacych firmach.
+        company_ids.append(company["id"])  # Dodaje id pasujacej firmy do listy.
+    return company_ids  # Zwraca liste id pasujacych firm.
+
+def get_warehouses_for_companies(company_ids: list) -> list:  # Definiuje funkcje zwracajaca magazyny kilku firm.
+    results = []  # Tworzy pusta liste wynikow.
+    for warehouse in database["warehouses"]:  # Przechodzi po wszystkich magazynach.
+        if warehouse["company_id"] in company_ids:  # Sprawdza, czy magazyn nalezy do jednej z wybranych firm.
+            results.append(warehouse)  # Dodaje magazyn do wynikow.
+    return results  # Zwraca liste magazynow pasujacych firm.
+
+def get_employees_for_companies(company_ids: list) -> list:  # Definiuje funkcje zwracajaca pracownikow kilku firm.
+    results = []  # Tworzy pusta liste wynikow.
+    for employee in database["employees"]:  # Przechodzi po wszystkich pracownikach.
+        if employee["company_id"] in company_ids:  # Sprawdza, czy pracownik nalezy do jednej z wybranych firm.
+            results.append(employee)  # Dodaje pracownika do wynikow.
+    return results  # Zwraca liste pracownikow pasujacych firm.
 
 def get_warehouses_for_company(company_id: int) -> list:  # Definiuje funkcje zwracajaca magazyny wybranej firmy.
     results = []  # Tworzy pusta liste wynikow.

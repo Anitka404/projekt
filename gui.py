@@ -29,7 +29,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.password_entry = tk.Entry(self.login_frame, show="*", width=30)  # Tworzy pole wpisywania hasla.
         self.password_entry.pack(pady=5)  # Pokazuje pole hasla.
         tk.Button(self.login_frame, text="Zaloguj", bg="#ff69b4", fg="white", width=20, command=self.check_login).pack(pady=20)  # Tworzy rozowy przycisk logowania.
-        tk.Label(self.login_frame, text="Dane testowe: admin / admin", bg="#ffd6e8").pack()  # Pokazuje podpowiedz z danymi testowymi.
+        tk.Label(self.login_frame, text="Dane testowe: admin / 123", bg="#ffd6e8").pack()  # Pokazuje podpowiedz z danymi testowymi.
 
     def check_login(self):  # Definiuje funkcje sprawdzajaca login i haslo.
         login = self.login_entry.get()  # Pobiera login wpisany przez uzytkownika.
@@ -202,9 +202,10 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
     def build_company_details_tab(self):  # Definiuje funkcje budujaca zakladke wybranej firmy.
         top = tk.Frame(self.company_details_tab)  # Tworzy gorny panel wyboru firmy.
         top.pack(fill="x", padx=10, pady=10)  # Pokazuje gorny panel.
-        tk.Label(top, text="Id firmy:").pack(side="left")  # Tworzy etykiete pola id firmy.
-        self.details_company_id = tk.Entry(top, width=10)  # Tworzy pole wpisania id firmy.
-        self.details_company_id.pack(side="left", padx=5)  # Pokazuje pole id firmy.
+        tk.Label(top, text="Filtr firmy:").pack(side="left")  # Tworzy etykiete pola filtra firmy.
+        self.details_company_filter = tk.Entry(top, width=25)  # Tworzy pole wpisania id, nazwy, miasta albo adresu firmy.
+        self.details_company_filter.pack(side="left", padx=5)  # Pokazuje pole filtra firmy.
+        self.details_company_filter.bind("<KeyRelease>", self.refresh_company_details_event)  # Odswieza dane firmy podczas pisania filtra.
         tk.Button(top, text="Pokaz", command=self.refresh_company_details).pack(side="left")  # Tworzy przycisk pokazujacy dane firmy.
         tables = tk.Frame(self.company_details_tab)  # Tworzy panel dwoch list.
         tables.pack(fill="both", expand=True, padx=10, pady=10)  # Pokazuje panel dwoch list.
@@ -246,6 +247,9 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.refresh_employees()  # Odswieza pracownikow.
         self.refresh_company_details()  # Odswieza widok wybranej firmy.
 
+    def refresh_company_details_event(self, event=None):  # Definiuje funkcje pomocnicza do odswiezania widoku firmy po wpisaniu tekstu.
+        self.refresh_company_details()  # Wywoluje odswiezenie widoku wybranej firmy.
+
     def refresh_companies(self, event=None):  # Definiuje funkcje odswiezajaca centrale firm.
         text = self.company_filter.get()  # Pobiera tekst filtra firm.
         items = controller.filter_items(controller.get_companies(), text)  # Filtruje centrale firm.
@@ -265,11 +269,10 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.fill_map(self.employee_map, items, "name")  # Wypelnia mape pracownikow tymi samymi wynikami.
 
     def refresh_company_details(self):  # Definiuje funkcje odswiezajaca dane wybranej firmy.
-        company_id = self.parse_int(self.details_company_id.get() or "1")  # Pobiera id firmy albo przyjmuje firme numer 1.
-        if company_id is None:  # Sprawdza, czy id firmy jest niepoprawne.
-            return  # Przerywa dzialanie funkcji.
-        warehouses = controller.get_warehouses_for_company(company_id)  # Pobiera magazyny wybranej firmy.
-        employees = controller.get_employees_for_company(company_id)  # Pobiera pracownikow wybranej firmy.
+        text = self.details_company_filter.get() or "1"  # Pobiera filtr firmy albo przyjmuje domyslnie firme numer 1.
+        company_ids = controller.get_company_ids_by_filter(text)  # Pobiera id firm pasujacych do filtra.
+        warehouses = controller.get_warehouses_for_companies(company_ids)  # Pobiera magazyny firm pasujacych do filtra.
+        employees = controller.get_employees_for_companies(company_ids)  # Pobiera pracownikow firm pasujacych do filtra.
         self.fill_tree(self.details_warehouse_tree, warehouses, ("id", "name", "city", "address"))  # Wypelnia tabele magazynow firmy.
         self.fill_tree(self.details_employee_tree, employees, ("id", "name", "position", "city"))  # Wypelnia tabele pracownikow firmy.
 
@@ -284,8 +287,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             self.company_address.insert(0, values[3])  # Wstawia adres firmy do formularza.
             self.company_latitude.insert(0, values[4])  # Wstawia szerokosc do formularza.
             self.company_longitude.insert(0, values[5])  # Wstawia dlugosc do formularza.
-            self.details_company_id.delete(0, tk.END)  # Czysci pole id firmy w zakladce szczegolow.
-            self.details_company_id.insert(0, values[0])  # Wstawia id firmy do zakladki szczegolow.
+            self.details_company_filter.delete(0, tk.END)  # Czysci pole filtra firmy w zakladce szczegolow.
+            self.details_company_filter.insert(0, values[1])  # Wstawia nazwe firmy do zakladki szczegolow.
             self.refresh_company_details()  # Odswieza magazyny i pracownikow wybranej firmy.
 
     def select_warehouse(self, event):  # Definiuje funkcje obslugujaca wybor magazynu z tabeli.

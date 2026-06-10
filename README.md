@@ -21,7 +21,7 @@ python main.py
 
 Login: `admin`
 
-Haslo: `admin`
+Haslo: `123`
 
 ## Funkcje
 
@@ -29,7 +29,7 @@ Haslo: `admin`
 - lista central firm z dodawaniem, edycja, usuwaniem i mapa,
 - lista magazynow z dodawaniem, edycja, usuwaniem i mapa,
 - lista pracownikow z dodawaniem, edycja, usuwaniem i mapa,
-- filtrowanie po nazwie albo miescie w tabeli i na mapie,
+- filtrowanie po dowolnym widocznym polu, na przyklad po nazwie, miescie, adresie albo stanowisku,
 - wyswietlanie magazynow wybranej firmy,
 - wyswietlanie pracownikow wybranej firmy,
 - zapis danych do pliku `data.json`.

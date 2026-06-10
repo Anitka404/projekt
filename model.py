@@ -5,7 +5,7 @@ import os  # Importuje modul os, ktory pozwala sprawdzac, czy plik istnieje.
 DATA_FILE = "data.json"  # Ustawia nazwe pliku, w ktorym aplikacja zapisuje dane.
 
 users = [  # Tworzy liste uzytkownikow, ktorzy moga zalogowac sie do systemu.
-    {"login": "admin", "password": "admin"}  # Dodaje podstawowe konto administratora.
+    {"login": "admin", "password": "123"}  # Dodaje podstawowe konto administratora.
 ]  # Konczy liste uzytkownikow.
 
 companies = [  # Tworzy liste central firm z magazynami.
