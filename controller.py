@@ -3,6 +3,38 @@ from model import load_database, save_database, users  # Importuje funkcje zapis
 
 database = load_database()  # Wczytuje dane aplikacji przy starcie programu.
 
+city_coordinates = {  # Tworzy slownik miast i ich wspolrzednych.
+    "warszawa": [52.2297, 21.0122],  # Dodaje wspolrzedne Warszawy.
+    "krakow": [50.0647, 19.9450],  # Dodaje wspolrzedne Krakowa.
+    "gdansk": [54.3520, 18.6466],  # Dodaje wspolrzedne Gdanska.
+    "lodz": [51.7592, 19.4560],  # Dodaje wspolrzedne Lodzi.
+    "wroclaw": [51.1079, 17.0385],  # Dodaje wspolrzedne Wroclawia.
+    "poznan": [52.4064, 16.9252],  # Dodaje wspolrzedne Poznania.
+    "bialystok": [53.1325, 23.1688],  # Dodaje wspolrzedne Bialegostoku.
+    "lublin": [51.2465, 22.5684],  # Dodaje wspolrzedne Lublina.
+    "rzeszow": [50.0413, 21.9990],  # Dodaje wspolrzedne Rzeszowa.
+    "szczecin": [53.4285, 14.5528],  # Dodaje wspolrzedne Szczecina.
+    "bydgoszcz": [53.1235, 18.0084],  # Dodaje wspolrzedne Bydgoszczy.
+    "torun": [53.0138, 18.5984],  # Dodaje wspolrzedne Torunia.
+    "katowice": [50.2649, 19.0238],  # Dodaje wspolrzedne Katowic.
+    "olsztyn": [53.7784, 20.4801],  # Dodaje wspolrzedne Olsztyna.
+    "opole": [50.6751, 17.9213],  # Dodaje wspolrzedne Opola.
+    "kielce": [50.8661, 20.6286]  # Dodaje wspolrzedne Kielc.
+}  # Konczy slownik miast.
+
+def normalize_city(city: str) -> str:  # Definiuje funkcje upraszczajaca nazwe miasta do porownania.
+    city_text = city.lower().strip()  # Zamienia miasto na male litery i usuwa spacje z poczatku oraz konca.
+    replacements = {"ą": "a", "ć": "c", "ę": "e", "ł": "l", "ń": "n", "ó": "o", "ś": "s", "ż": "z", "ź": "z"}  # Tworzy slownik polskich znakow do zamiany.
+    for old_letter, new_letter in replacements.items():  # Przechodzi po parach znakow do zamiany.
+        city_text = city_text.replace(old_letter, new_letter)  # Zamienia polski znak na prostsza litere.
+    return city_text  # Zwraca uproszczona nazwe miasta.
+
+def get_coordinates_for_city(city: str) -> list:  # Definiuje funkcje pobierajaca wspolrzedne miasta.
+    city_key = normalize_city(city)  # Upraszcza nazwe miasta do klucza w slowniku.
+    if city_key in city_coordinates:  # Sprawdza, czy miasto istnieje w slowniku.
+        return city_coordinates[city_key]  # Zwraca wspolrzedne znalezionego miasta.
+    return None  # Zwraca brak danych, gdy miasta nie ma w slowniku.
+
 def login_user(login: str, password: str) -> bool:  # Definiuje funkcje sprawdzajaca logowanie.
     for user in users:  # Przechodzi po wszystkich zapisanych uzytkownikach.
         if user["login"] == login and user["password"] == password:  # Sprawdza, czy login i haslo sa poprawne.

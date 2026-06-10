@@ -30,6 +30,7 @@ Haslo: `123`
 - lista magazynow z dodawaniem, edycja, usuwaniem i mapa,
 - lista pracownikow z dodawaniem, edycja, usuwaniem i mapa,
 - filtrowanie po dowolnym widocznym polu, na przyklad po nazwie, miescie, adresie albo stanowisku,
+- automatyczne uzupelnianie wspolrzednych i podglad znacznika po wpisaniu miasta,
 - wyswietlanie magazynow wybranej firmy,
 - wyswietlanie pracownikow wybranej firmy,
 - zapis danych do pliku `data.json`.

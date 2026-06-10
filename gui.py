@@ -79,6 +79,31 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             if map_widget is not None:  # Sprawdza, czy mapa istnieje.
                 map_widget.set_marker(item["latitude"], item["longitude"], text=text)  # Dodaje znacznik na mapie.
 
+    def put_entry_value(self, entry, value):  # Definiuje funkcje wpisujaca wartosc do pola tekstowego.
+        entry.delete(0, tk.END)  # Usuwa stara wartosc pola.
+        entry.insert(0, str(value))  # Wpisuje nowa wartosc do pola.
+
+    def show_city_on_map(self, city_entry, latitude_entry, longitude_entry, map_widget, title):  # Definiuje funkcje pokazujaca miasto na mapie.
+        city = city_entry.get()  # Pobiera miasto wpisane przez uzytkownika.
+        coordinates = controller.get_coordinates_for_city(city)  # Pobiera wspolrzedne miasta z kontrolera.
+        if coordinates is not None:  # Sprawdza, czy miasto zostalo znalezione.
+            self.put_entry_value(latitude_entry, coordinates[0])  # Wpisuje szerokosc geograficzna do formularza.
+            self.put_entry_value(longitude_entry, coordinates[1])  # Wpisuje dlugosc geograficzna do formularza.
+            self.clear_map(map_widget)  # Czysci aktualne znaczniki mapy.
+            if map_widget is not None:  # Sprawdza, czy mapa istnieje.
+                map_widget.set_position(coordinates[0], coordinates[1])  # Ustawia mape na znalezione miasto.
+                map_widget.set_zoom(10)  # Przybliza mape do miasta.
+                map_widget.set_marker(coordinates[0], coordinates[1], text=title + " - " + city)  # Dodaje znacznik miasta.
+
+    def show_company_city_on_map(self, event=None):  # Definiuje funkcje reagujaca na wpisanie miasta centrali.
+        self.show_city_on_map(self.company_city, self.company_latitude, self.company_longitude, self.company_map, "Centrala")  # Pokazuje miasto centrali na mapie.
+
+    def show_warehouse_city_on_map(self, event=None):  # Definiuje funkcje reagujaca na wpisanie miasta magazynu.
+        self.show_city_on_map(self.warehouse_city, self.warehouse_latitude, self.warehouse_longitude, self.warehouse_map, "Magazyn")  # Pokazuje miasto magazynu na mapie.
+
+    def show_employee_city_on_map(self, event=None):  # Definiuje funkcje reagujaca na wpisanie miasta pracownika.
+        self.show_city_on_map(self.employee_city, self.employee_latitude, self.employee_longitude, self.employee_map, "Pracownik")  # Pokazuje miasto pracownika na mapie.
+
     def parse_float(self, value):  # Definiuje funkcje zamieniajaca tekst na liczbe zmiennoprzecinkowa.
         try:  # Rozpoczyna probe konwersji.
             return float(value.replace(",", "."))  # Zwraca liczbe i pozwala uzywac przecinka zamiast kropki.
@@ -110,6 +135,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.add_label_entry(form, "Adres", self.company_address, 2)  # Dodaje pole adresu do formularza.
         self.add_label_entry(form, "Szerokosc", self.company_latitude, 3)  # Dodaje pole szerokosci do formularza.
         self.add_label_entry(form, "Dlugosc", self.company_longitude, 4)  # Dodaje pole dlugosci do formularza.
+        self.company_city.bind("<KeyRelease>", self.show_company_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_company).pack(side="left", padx=3)  # Tworzy przycisk dodawania firmy.
@@ -146,6 +172,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.add_label_entry(form, "Adres", self.warehouse_address, 3)  # Dodaje pole adresu do formularza.
         self.add_label_entry(form, "Szerokosc", self.warehouse_latitude, 4)  # Dodaje pole szerokosci do formularza.
         self.add_label_entry(form, "Dlugosc", self.warehouse_longitude, 5)  # Dodaje pole dlugosci do formularza.
+        self.warehouse_city.bind("<KeyRelease>", self.show_warehouse_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_warehouse).pack(side="left", padx=3)  # Tworzy przycisk dodawania magazynu.
@@ -182,6 +209,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.add_label_entry(form, "Miasto", self.employee_city, 3)  # Dodaje pole miasta do formularza.
         self.add_label_entry(form, "Szerokosc", self.employee_latitude, 4)  # Dodaje pole szerokosci do formularza.
         self.add_label_entry(form, "Dlugosc", self.employee_longitude, 5)  # Dodaje pole dlugosci do formularza.
+        self.employee_city.bind("<KeyRelease>", self.show_employee_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_employee).pack(side="left", padx=3)  # Tworzy przycisk dodawania pracownika.
