@@ -31,6 +31,14 @@
             "address": "ul. Osmańska 2",
             "latitude": 52.156,
             "longitude": 21.004
+        },
+        {
+            "id": 5,
+            "name": "DPD",
+            "city": "Katowice",
+            "address": "ul. Olimpijska 35",
+            "latitude": 50.2649,
+            "longitude": 19.0238
         }
     ],
     "warehouses": [
@@ -87,6 +95,15 @@
             "address": "ul. Osmańska 2",
             "latitude": 52.156,
             "longitude": 21.004
+        },
+        {
+            "id": 7,
+            "company_id": 5,
+            "name": "DPD Oddział Katowice",
+            "city": "Katowice",
+            "address": "ul. Jasnogórska 27",
+            "latitude": 50.2649,
+            "longitude": 19.0238
         }
     ],
     "employees": [
@@ -134,6 +151,15 @@
             "city": "Warszawa",
             "latitude": 52.156,
             "longitude": 21.004
+        },
+        {
+            "id": 6,
+            "company_id": 5,
+            "name": "Anita Kowalczyk",
+            "position": "Magazynier",
+            "city": "Katowice",
+            "latitude": 50.2649,
+            "longitude": 19.0238
         }
     ]
 }
