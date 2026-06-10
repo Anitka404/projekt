@@ -11,7 +11,7 @@ except ImportError:  # Obsluguje sytuacje, gdy biblioteka nie jest zainstalowana
 class WarehouseApp:  # Definiuje klase glownego programu GUI.
     def __init__(self, root):  # Definiuje funkcje startowa klasy.
         self.root = root  # Zapamietuje glowne okno programu.
-        self.root.title("System zarzadzania magazynami i zapasami")  # Ustawia tytul glownego okna.
+        self.root.title("System zarządzania magazynami i zapasami")  # Ustawia tytuł głównego okna.
         self.root.geometry("1180x720")  # Ustawia rozmiar glownego okna.
         self.selected_company_id = None  # Tworzy zmienna na id zaznaczonej firmy.
         self.selected_warehouse_id = None  # Tworzy zmienna na id zaznaczonego magazynu.
@@ -25,7 +25,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         tk.Label(self.login_frame, text="Login:", bg="#ffd6e8", font=("Arial", 12)).pack()  # Tworzy etykiete pola loginu.
         self.login_entry = tk.Entry(self.login_frame, width=30)  # Tworzy pole wpisywania loginu.
         self.login_entry.pack(pady=5)  # Pokazuje pole loginu.
-        tk.Label(self.login_frame, text="Haslo:", bg="#ffd6e8", font=("Arial", 12)).pack()  # Tworzy etykiete pola hasla.
+        tk.Label(self.login_frame, text="Hasło:", bg="#ffd6e8", font=("Arial", 12)).pack()  # Tworzy etykietę pola hasła.
         self.password_entry = tk.Entry(self.login_frame, show="*", width=30)  # Tworzy pole wpisywania hasla.
         self.password_entry.pack(pady=5)  # Pokazuje pole hasla.
         tk.Button(self.login_frame, text="Zaloguj", bg="#ff69b4", fg="white", width=20, command=self.check_login).pack(pady=20)  # Tworzy rozowy przycisk logowania.
@@ -38,7 +38,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             self.login_frame.destroy()  # Usuwa ekran logowania po poprawnym logowaniu.
             self.build_main_view()  # Buduje glowny widok aplikacji.
         else:  # Wykonuje sie, gdy logowanie jest niepoprawne.
-            messagebox.showerror("Blad", "Niepoprawny login lub haslo")  # Pokazuje komunikat bledu.
+            messagebox.showerror("Błąd", "Niepoprawny login lub hasło")  # Pokazuje komunikat błędu.
 
     def build_main_view(self):  # Definiuje funkcje tworzaca glowny widok programu.
         self.notebook = ttk.Notebook(self.root)  # Tworzy zakladki programu.
@@ -108,14 +108,14 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         try:  # Rozpoczyna probe konwersji.
             return float(value.replace(",", "."))  # Zwraca liczbe i pozwala uzywac przecinka zamiast kropki.
         except ValueError:  # Obsluguje bledna liczbe.
-            messagebox.showerror("Blad", "Wspolrzedne musza byc liczbami")  # Pokazuje komunikat bledu.
+            messagebox.showerror("Błąd", "Współrzędne muszą być liczbami")  # Pokazuje komunikat błędu.
             return None  # Zwraca brak wartosci.
 
     def parse_int(self, value):  # Definiuje funkcje zamieniajaca tekst na liczbe calkowita.
         try:  # Rozpoczyna probe konwersji.
             return int(value)  # Zwraca liczbe calkowita.
         except ValueError:  # Obsluguje bledna liczbe.
-            messagebox.showerror("Blad", "Id firmy musi byc liczba")  # Pokazuje komunikat bledu.
+            messagebox.showerror("Błąd", "Id firmy musi być liczbą")  # Pokazuje komunikat błędu.
             return None  # Zwraca brak wartosci.
 
     def build_company_tab(self):  # Definiuje funkcje budujaca zakladke central firm.
@@ -133,16 +133,16 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.add_label_entry(form, "Nazwa", self.company_name, 0)  # Dodaje pole nazwy do formularza.
         self.add_label_entry(form, "Miasto", self.company_city, 1)  # Dodaje pole miasta do formularza.
         self.add_label_entry(form, "Adres", self.company_address, 2)  # Dodaje pole adresu do formularza.
-        self.add_label_entry(form, "Szerokosc", self.company_latitude, 3)  # Dodaje pole szerokosci do formularza.
-        self.add_label_entry(form, "Dlugosc", self.company_longitude, 4)  # Dodaje pole dlugosci do formularza.
+        self.add_label_entry(form, "Szerokość", self.company_latitude, 3)  # Dodaje pole szerokości do formularza.
+        self.add_label_entry(form, "Długość", self.company_longitude, 4)  # Dodaje pole długości do formularza.
         self.company_city.bind("<KeyRelease>", self.show_company_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_company).pack(side="left", padx=3)  # Tworzy przycisk dodawania firmy.
         tk.Button(buttons, text="Aktualizuj", command=self.update_company).pack(side="left", padx=3)  # Tworzy przycisk aktualizacji firmy.
-        tk.Button(buttons, text="Usun", command=self.delete_company).pack(side="left", padx=3)  # Tworzy przycisk usuwania firmy.
-        tk.Button(buttons, text="Wyczysc", command=self.clear_company_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
-        tk.Label(left, text="Filtruj po nazwie lub miescie").pack(anchor="w")  # Tworzy etykiete filtra.
+        tk.Button(buttons, text="Usuń", command=self.delete_company).pack(side="left", padx=3)  # Tworzy przycisk usuwania firmy.
+        tk.Button(buttons, text="Wyczyść", command=self.clear_company_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
+        tk.Label(left, text="Filtruj po nazwie lub mieście").pack(anchor="w")  # Tworzy etykietę filtra.
         self.company_filter = tk.Entry(left)  # Tworzy pole filtra firm.
         self.company_filter.pack(fill="x", pady=3)  # Pokazuje pole filtra.
         self.company_filter.bind("<KeyRelease>", self.refresh_companies)  # Odswieza liste przy pisaniu filtra.
@@ -170,16 +170,16 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.add_label_entry(form, "Nazwa", self.warehouse_name, 1)  # Dodaje pole nazwy do formularza.
         self.add_label_entry(form, "Miasto", self.warehouse_city, 2)  # Dodaje pole miasta do formularza.
         self.add_label_entry(form, "Adres", self.warehouse_address, 3)  # Dodaje pole adresu do formularza.
-        self.add_label_entry(form, "Szerokosc", self.warehouse_latitude, 4)  # Dodaje pole szerokosci do formularza.
-        self.add_label_entry(form, "Dlugosc", self.warehouse_longitude, 5)  # Dodaje pole dlugosci do formularza.
+        self.add_label_entry(form, "Szerokość", self.warehouse_latitude, 4)  # Dodaje pole szerokości do formularza.
+        self.add_label_entry(form, "Długość", self.warehouse_longitude, 5)  # Dodaje pole długości do formularza.
         self.warehouse_city.bind("<KeyRelease>", self.show_warehouse_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_warehouse).pack(side="left", padx=3)  # Tworzy przycisk dodawania magazynu.
         tk.Button(buttons, text="Aktualizuj", command=self.update_warehouse).pack(side="left", padx=3)  # Tworzy przycisk aktualizacji magazynu.
-        tk.Button(buttons, text="Usun", command=self.delete_warehouse).pack(side="left", padx=3)  # Tworzy przycisk usuwania magazynu.
-        tk.Button(buttons, text="Wyczysc", command=self.clear_warehouse_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
-        tk.Label(left, text="Filtruj po nazwie lub miescie").pack(anchor="w")  # Tworzy etykiete filtra.
+        tk.Button(buttons, text="Usuń", command=self.delete_warehouse).pack(side="left", padx=3)  # Tworzy przycisk usuwania magazynu.
+        tk.Button(buttons, text="Wyczyść", command=self.clear_warehouse_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
+        tk.Label(left, text="Filtruj po nazwie lub mieście").pack(anchor="w")  # Tworzy etykietę filtra.
         self.warehouse_filter = tk.Entry(left)  # Tworzy pole filtra magazynow.
         self.warehouse_filter.pack(fill="x", pady=3)  # Pokazuje pole filtra.
         self.warehouse_filter.bind("<KeyRelease>", self.refresh_warehouses)  # Odswieza magazyny przy pisaniu filtra.
@@ -204,19 +204,19 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.employee_latitude = tk.Entry(form)  # Tworzy pole szerokosci geograficznej.
         self.employee_longitude = tk.Entry(form)  # Tworzy pole dlugosci geograficznej.
         self.add_label_entry(form, "Id firmy", self.employee_company_id, 0)  # Dodaje pole id firmy do formularza.
-        self.add_label_entry(form, "Imie i nazwisko", self.employee_name, 1)  # Dodaje pole imienia i nazwiska do formularza.
+        self.add_label_entry(form, "Imię i nazwisko", self.employee_name, 1)  # Dodaje pole imienia i nazwiska do formularza.
         self.add_label_entry(form, "Stanowisko", self.employee_position, 2)  # Dodaje pole stanowiska do formularza.
         self.add_label_entry(form, "Miasto", self.employee_city, 3)  # Dodaje pole miasta do formularza.
-        self.add_label_entry(form, "Szerokosc", self.employee_latitude, 4)  # Dodaje pole szerokosci do formularza.
-        self.add_label_entry(form, "Dlugosc", self.employee_longitude, 5)  # Dodaje pole dlugosci do formularza.
+        self.add_label_entry(form, "Szerokość", self.employee_latitude, 4)  # Dodaje pole szerokości do formularza.
+        self.add_label_entry(form, "Długość", self.employee_longitude, 5)  # Dodaje pole długości do formularza.
         self.employee_city.bind("<KeyRelease>", self.show_employee_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
         tk.Button(buttons, text="Dodaj", command=self.add_employee).pack(side="left", padx=3)  # Tworzy przycisk dodawania pracownika.
         tk.Button(buttons, text="Aktualizuj", command=self.update_employee).pack(side="left", padx=3)  # Tworzy przycisk aktualizacji pracownika.
-        tk.Button(buttons, text="Usun", command=self.delete_employee).pack(side="left", padx=3)  # Tworzy przycisk usuwania pracownika.
-        tk.Button(buttons, text="Wyczysc", command=self.clear_employee_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
-        tk.Label(left, text="Filtruj po nazwie lub miescie").pack(anchor="w")  # Tworzy etykiete filtra.
+        tk.Button(buttons, text="Usuń", command=self.delete_employee).pack(side="left", padx=3)  # Tworzy przycisk usuwania pracownika.
+        tk.Button(buttons, text="Wyczyść", command=self.clear_employee_form).pack(side="left", padx=3)  # Tworzy przycisk czyszczenia formularza.
+        tk.Label(left, text="Filtruj po nazwie lub mieście").pack(anchor="w")  # Tworzy etykietę filtra.
         self.employee_filter = tk.Entry(left)  # Tworzy pole filtra pracownikow.
         self.employee_filter.pack(fill="x", pady=3)  # Pokazuje pole filtra.
         self.employee_filter.bind("<KeyRelease>", self.refresh_employees)  # Odswieza pracownikow przy pisaniu filtra.
@@ -234,7 +234,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.details_company_filter = tk.Entry(top, width=25)  # Tworzy pole wpisania id, nazwy, miasta albo adresu firmy.
         self.details_company_filter.pack(side="left", padx=5)  # Pokazuje pole filtra firmy.
         self.details_company_filter.bind("<KeyRelease>", self.refresh_company_details_event)  # Odswieza dane firmy podczas pisania filtra.
-        tk.Button(top, text="Pokaz", command=self.refresh_company_details).pack(side="left")  # Tworzy przycisk pokazujacy dane firmy.
+        tk.Button(top, text="Pokaż", command=self.refresh_company_details).pack(side="left")  # Tworzy przycisk pokazujący dane firmy.
         tables = tk.Frame(self.company_details_tab)  # Tworzy panel dwoch list.
         tables.pack(fill="both", expand=True, padx=10, pady=10)  # Pokazuje panel dwoch list.
         left = tk.Frame(tables)  # Tworzy lewa czesc z magazynami.
@@ -356,7 +356,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
 
     def update_company(self):  # Definiuje funkcje aktualizujaca firme.
         if self.selected_company_id is None:  # Sprawdza, czy wybrano firme.
-            messagebox.showwarning("Uwaga", "Wybierz firme z tabeli")  # Pokazuje ostrzezenie.
+            messagebox.showwarning("Uwaga", "Wybierz firmę z tabeli")  # Pokazuje ostrzeżenie.
             return  # Przerywa aktualizacje.
         latitude = self.parse_float(self.company_latitude.get())  # Pobiera szerokosc geograficzna.
         longitude = self.parse_float(self.company_longitude.get())  # Pobiera dlugosc geograficzna.
@@ -368,7 +368,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
 
     def delete_company(self):  # Definiuje funkcje usuwajaca firme.
         if self.selected_company_id is None:  # Sprawdza, czy wybrano firme.
-            messagebox.showwarning("Uwaga", "Wybierz firme z tabeli")  # Pokazuje ostrzezenie.
+            messagebox.showwarning("Uwaga", "Wybierz firmę z tabeli")  # Pokazuje ostrzeżenie.
             return  # Przerywa usuwanie.
         controller.delete_company(self.selected_company_id)  # Usuwa firme przez kontroler.
         self.clear_company_form()  # Czysci formularz firmy.

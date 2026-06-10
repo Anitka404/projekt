@@ -1,31 +1,35 @@
 # Plik przechowuje dane startowe programu oraz proste funkcje do zapisu i odczytu danych.
-import json  # Importuje modul json, ktory pozwala zapisywac i odczytywac dane z pliku.
-import os  # Importuje modul os, ktory pozwala sprawdzac, czy plik istnieje.
+import json  # Importuje moduł json, który pozwala zapisywać i odczytywać dane z pliku.
+import os  # Importuje moduł os, który pozwala sprawdzać, czy plik istnieje.
 
 DATA_FILE = "data.json"  # Ustawia nazwe pliku, w ktorym aplikacja zapisuje dane.
 
-users = [  # Tworzy liste uzytkownikow, ktorzy moga zalogowac sie do systemu.
+users = [  # Tworzy listę użytkowników, którzy mogą zalogować się do systemu.
     {"login": "admin", "password": "123"}  # Dodaje podstawowe konto administratora.
-]  # Konczy liste uzytkownikow.
+]  # Kończy listę użytkowników.
 
 companies = [  # Tworzy liste central firm z magazynami.
-    {"id": 1, "name": "Firma Alfa", "city": "Warszawa", "address": "ul. Prosta 1", "latitude": 52.2297, "longitude": 21.0122},  # Dodaje centrale pierwszej firmy.
-    {"id": 2, "name": "Firma Beta", "city": "Krakow", "address": "ul. Dluga 5", "latitude": 50.0647, "longitude": 19.9450},  # Dodaje centrale drugiej firmy.
-    {"id": 3, "name": "Firma Gamma", "city": "Gdansk", "address": "ul. Morska 10", "latitude": 54.3520, "longitude": 18.6466}  # Dodaje centrale trzeciej firmy.
+    {"id": 1, "name": "Raben Logistics Polska", "city": "Robakowo", "address": "ul. Zbożowa 1", "latitude": 52.3170, "longitude": 17.0660},  # Dodaje centralę firmy Raben Logistics Polska.
+    {"id": 2, "name": "Röhlig SUUS Logistics", "city": "Warszawa", "address": "ul. Równoległa 4A", "latitude": 52.1690, "longitude": 20.9670},  # Dodaje centralę firmy Röhlig SUUS Logistics.
+    {"id": 3, "name": "FM Logistic Polska", "city": "Mszczonów", "address": "ul. Tarczyńska 111", "latitude": 51.9740, "longitude": 20.5200},  # Dodaje centralę firmy FM Logistic Polska.
+    {"id": 4, "name": "DHL Supply Chain Polska", "city": "Warszawa", "address": "ul. Osmańska 2", "latitude": 52.1560, "longitude": 21.0040}  # Dodaje centralę firmy DHL Supply Chain Polska.
 ]  # Konczy liste central firm.
 
 warehouses = [  # Tworzy liste magazynow wszystkich firm.
-    {"id": 1, "company_id": 1, "name": "Magazyn Alfa 1", "city": "Warszawa", "address": "ul. Towarowa 20", "latitude": 52.2250, "longitude": 20.9890},  # Dodaje magazyn firmy Alfa.
-    {"id": 2, "company_id": 1, "name": "Magazyn Alfa 2", "city": "Lodz", "address": "ul. Fabryczna 7", "latitude": 51.7592, "longitude": 19.4560},  # Dodaje drugi magazyn firmy Alfa.
-    {"id": 3, "company_id": 2, "name": "Magazyn Beta 1", "city": "Krakow", "address": "ul. Magazynowa 3", "latitude": 50.0610, "longitude": 19.9360},  # Dodaje magazyn firmy Beta.
-    {"id": 4, "company_id": 3, "name": "Magazyn Gamma 1", "city": "Gdansk", "address": "ul. Portowa 8", "latitude": 54.3600, "longitude": 18.6500}  # Dodaje magazyn firmy Gamma.
+    {"id": 1, "company_id": 1, "name": "Raben Oddział Robakowo", "city": "Robakowo", "address": "ul. Zbożowa 1", "latitude": 52.3170, "longitude": 17.0660},  # Dodaje magazyn firmy Raben w Robakowie.
+    {"id": 2, "company_id": 1, "name": "Raben Oddział Sosnowiec", "city": "Sosnowiec", "address": "ul. Inwestycyjna", "latitude": 50.2860, "longitude": 19.1040},  # Dodaje magazyn firmy Raben w Sosnowcu.
+    {"id": 3, "company_id": 2, "name": "SUUS Magazyn Warszawa", "city": "Warszawa", "address": "ul. Równoległa 4A", "latitude": 52.1690, "longitude": 20.9670},  # Dodaje magazyn firmy SUUS w Warszawie.
+    {"id": 4, "company_id": 2, "name": "SUUS Magazyn Gdańsk", "city": "Gdańsk", "address": "okolice portu", "latitude": 54.3520, "longitude": 18.6466},  # Dodaje magazyn firmy SUUS w Gdańsku.
+    {"id": 5, "company_id": 3, "name": "FM Logistic Platforma Mszczonów", "city": "Mszczonów", "address": "ul. Tarczyńska 111", "latitude": 51.9740, "longitude": 20.5200},  # Dodaje magazyn firmy FM Logistic w Mszczonowie.
+    {"id": 6, "company_id": 4, "name": "DHL Supply Chain Warszawa", "city": "Warszawa", "address": "ul. Osmańska 2", "latitude": 52.1560, "longitude": 21.0040}  # Dodaje magazyn firmy DHL Supply Chain w Warszawie.
 ]  # Konczy liste magazynow.
 
 employees = [  # Tworzy liste pracownikow firm.
-    {"id": 1, "company_id": 1, "name": "Anna Kowalska", "position": "Kierownik", "city": "Warszawa", "latitude": 52.2300, "longitude": 21.0100},  # Dodaje pracownika firmy Alfa.
-    {"id": 2, "company_id": 1, "name": "Jan Nowak", "position": "Magazynier", "city": "Lodz", "latitude": 51.7600, "longitude": 19.4550},  # Dodaje drugiego pracownika firmy Alfa.
-    {"id": 3, "company_id": 2, "name": "Ewa Zielinska", "position": "Specjalista", "city": "Krakow", "latitude": 50.0650, "longitude": 19.9440},  # Dodaje pracownika firmy Beta.
-    {"id": 4, "company_id": 3, "name": "Piotr Wisniewski", "position": "Logistyk", "city": "Gdansk", "latitude": 54.3510, "longitude": 18.6470}  # Dodaje pracownika firmy Gamma.
+    {"id": 1, "company_id": 1, "name": "Anna Kowalska", "position": "Kierownik magazynu", "city": "Robakowo", "latitude": 52.3170, "longitude": 17.0660},  # Dodaje przykładowego pracownika firmy Raben.
+    {"id": 2, "company_id": 1, "name": "Jan Wiśniewski", "position": "Magazynier", "city": "Sosnowiec", "latitude": 50.2860, "longitude": 19.1040},  # Dodaje drugiego przykładowego pracownika firmy Raben.
+    {"id": 3, "company_id": 2, "name": "Ewa Zielińska", "position": "Specjalista ds. transportu", "city": "Warszawa", "latitude": 52.1690, "longitude": 20.9670},  # Dodaje przykładowego pracownika firmy SUUS.
+    {"id": 4, "company_id": 3, "name": "Piotr Nowak", "position": "Logistyk", "city": "Mszczonów", "latitude": 51.9740, "longitude": 20.5200},  # Dodaje przykładowego pracownika firmy FM Logistic.
+    {"id": 5, "company_id": 4, "name": "Katarzyna Wójcik", "position": "Koordynator dostaw", "city": "Warszawa", "latitude": 52.1560, "longitude": 21.0040}  # Dodaje przykładowego pracownika firmy DHL Supply Chain.
 ]  # Konczy liste pracownikow.
 
 def make_database() -> dict:  # Definiuje funkcje, ktora sklada wszystkie listy w jeden slownik.

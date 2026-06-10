@@ -1,26 +1,29 @@
-# Plik zawiera funkcje obslugujace logike programu, czyli dodawanie, edycje, usuwanie i filtrowanie danych.
-from model import load_database, save_database, users  # Importuje funkcje zapisu, odczytu oraz liste uzytkownikow.
+# Plik zawiera funkcje obsługujące logikę programu, czyli dodawanie, edycję, usuwanie i filtrowanie danych.
+from model import load_database, save_database, users  # Importuje funkcje zapisu, odczytu oraz listę użytkowników.
 
 database = load_database()  # Wczytuje dane aplikacji przy starcie programu.
 
-city_coordinates = {  # Tworzy slownik miast i ich wspolrzednych.
-    "warszawa": [52.2297, 21.0122],  # Dodaje wspolrzedne Warszawy.
-    "krakow": [50.0647, 19.9450],  # Dodaje wspolrzedne Krakowa.
-    "gdansk": [54.3520, 18.6466],  # Dodaje wspolrzedne Gdanska.
-    "lodz": [51.7592, 19.4560],  # Dodaje wspolrzedne Lodzi.
-    "wroclaw": [51.1079, 17.0385],  # Dodaje wspolrzedne Wroclawia.
-    "poznan": [52.4064, 16.9252],  # Dodaje wspolrzedne Poznania.
-    "bialystok": [53.1325, 23.1688],  # Dodaje wspolrzedne Bialegostoku.
-    "lublin": [51.2465, 22.5684],  # Dodaje wspolrzedne Lublina.
-    "rzeszow": [50.0413, 21.9990],  # Dodaje wspolrzedne Rzeszowa.
-    "szczecin": [53.4285, 14.5528],  # Dodaje wspolrzedne Szczecina.
-    "bydgoszcz": [53.1235, 18.0084],  # Dodaje wspolrzedne Bydgoszczy.
-    "torun": [53.0138, 18.5984],  # Dodaje wspolrzedne Torunia.
-    "katowice": [50.2649, 19.0238],  # Dodaje wspolrzedne Katowic.
-    "olsztyn": [53.7784, 20.4801],  # Dodaje wspolrzedne Olsztyna.
-    "opole": [50.6751, 17.9213],  # Dodaje wspolrzedne Opola.
-    "kielce": [50.8661, 20.6286]  # Dodaje wspolrzedne Kielc.
-}  # Konczy slownik miast.
+city_coordinates = {  # Tworzy słownik miast i ich współrzędnych.
+    "warszawa": [52.2297, 21.0122],  # Dodaje współrzędne Warszawy.
+    "krakow": [50.0647, 19.9450],  # Dodaje współrzędne Krakowa.
+    "gdansk": [54.3520, 18.6466],  # Dodaje współrzędne Gdańska.
+    "lodz": [51.7592, 19.4560],  # Dodaje współrzędne Łodzi.
+    "wroclaw": [51.1079, 17.0385],  # Dodaje współrzędne Wrocławia.
+    "poznan": [52.4064, 16.9252],  # Dodaje współrzędne Poznania.
+    "bialystok": [53.1325, 23.1688],  # Dodaje współrzędne Białegostoku.
+    "lublin": [51.2465, 22.5684],  # Dodaje współrzędne Lublina.
+    "rzeszow": [50.0413, 21.9990],  # Dodaje współrzędne Rzeszowa.
+    "szczecin": [53.4285, 14.5528],  # Dodaje współrzędne Szczecina.
+    "bydgoszcz": [53.1235, 18.0084],  # Dodaje współrzędne Bydgoszczy.
+    "torun": [53.0138, 18.5984],  # Dodaje współrzędne Torunia.
+    "katowice": [50.2649, 19.0238],  # Dodaje współrzędne Katowic.
+    "olsztyn": [53.7784, 20.4801],  # Dodaje współrzędne Olsztyna.
+    "opole": [50.6751, 17.9213],  # Dodaje współrzędne Opola.
+    "kielce": [50.8661, 20.6286],  # Dodaje współrzędne Kielc.
+    "robakowo": [52.3170, 17.0660],  # Dodaje współrzędne Robakowa.
+    "mszczonow": [51.9740, 20.5200],  # Dodaje współrzędne Mszczonowa.
+    "sosnowiec": [50.2860, 19.1040]  # Dodaje współrzędne Sosnowca.
+}  # Kończy słownik miast.
 
 def normalize_city(city: str) -> str:  # Definiuje funkcje upraszczajaca nazwe miasta do porownania.
     city_text = city.lower().strip()  # Zamienia miasto na male litery i usuwa spacje z poczatku oraz konca.

@@ -1,0 +1,139 @@
+{
+    "companies": [
+        {
+            "id": 1,
+            "name": "Raben Logistics Polska",
+            "city": "Robakowo",
+            "address": "ul. Zbożowa 1",
+            "latitude": 52.317,
+            "longitude": 17.066
+        },
+        {
+            "id": 2,
+            "name": "Röhlig SUUS Logistics",
+            "city": "Warszawa",
+            "address": "ul. Równoległa 4A",
+            "latitude": 52.169,
+            "longitude": 20.967
+        },
+        {
+            "id": 3,
+            "name": "FM Logistic Polska",
+            "city": "Mszczonów",
+            "address": "ul. Tarczyńska 111",
+            "latitude": 51.974,
+            "longitude": 20.52
+        },
+        {
+            "id": 4,
+            "name": "DHL Supply Chain Polska",
+            "city": "Warszawa",
+            "address": "ul. Osmańska 2",
+            "latitude": 52.156,
+            "longitude": 21.004
+        }
+    ],
+    "warehouses": [
+        {
+            "id": 1,
+            "company_id": 1,
+            "name": "Raben Oddział Robakowo",
+            "city": "Robakowo",
+            "address": "ul. Zbożowa 1",
+            "latitude": 52.317,
+            "longitude": 17.066
+        },
+        {
+            "id": 2,
+            "company_id": 1,
+            "name": "Raben Oddział Sosnowiec",
+            "city": "Sosnowiec",
+            "address": "ul. Inwestycyjna",
+            "latitude": 50.286,
+            "longitude": 19.104
+        },
+        {
+            "id": 3,
+            "company_id": 2,
+            "name": "SUUS Magazyn Warszawa",
+            "city": "Warszawa",
+            "address": "ul. Równoległa 4A",
+            "latitude": 52.169,
+            "longitude": 20.967
+        },
+        {
+            "id": 4,
+            "company_id": 2,
+            "name": "SUUS Magazyn Gdańsk",
+            "city": "Gdańsk",
+            "address": "okolice portu",
+            "latitude": 54.352,
+            "longitude": 18.6466
+        },
+        {
+            "id": 5,
+            "company_id": 3,
+            "name": "FM Logistic Platforma Mszczonów",
+            "city": "Mszczonów",
+            "address": "ul. Tarczyńska 111",
+            "latitude": 51.974,
+            "longitude": 20.52
+        },
+        {
+            "id": 6,
+            "company_id": 4,
+            "name": "DHL Supply Chain Warszawa",
+            "city": "Warszawa",
+            "address": "ul. Osmańska 2",
+            "latitude": 52.156,
+            "longitude": 21.004
+        }
+    ],
+    "employees": [
+        {
+            "id": 1,
+            "company_id": 1,
+            "name": "Anna Kowalska",
+            "position": "Kierownik magazynu",
+            "city": "Robakowo",
+            "latitude": 52.317,
+            "longitude": 17.066
+        },
+        {
+            "id": 2,
+            "company_id": 1,
+            "name": "Jan Wiśniewski",
+            "position": "Magazynier",
+            "city": "Sosnowiec",
+            "latitude": 50.286,
+            "longitude": 19.104
+        },
+        {
+            "id": 3,
+            "company_id": 2,
+            "name": "Ewa Zielińska",
+            "position": "Specjalista ds. transportu",
+            "city": "Warszawa",
+            "latitude": 52.169,
+            "longitude": 20.967
+        },
+        {
+            "id": 4,
+            "company_id": 3,
+            "name": "Piotr Nowak",
+            "position": "Logistyk",
+            "city": "Mszczonów",
+            "latitude": 51.974,
+            "longitude": 20.52
+        },
+        {
+            "id": 5,
+            "company_id": 4,
+            "name": "Katarzyna Wójcik",
+            "position": "Koordynator dostaw",
+            "city": "Warszawa",
+            "latitude": 52.156,
+            "longitude": 21.004
+        }
+    ]
+}
