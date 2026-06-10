@@ -141,7 +141,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.company_city.bind("<KeyRelease>", self.show_company_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
-        tk.Button(buttons, text="Dodaj", command=self.add_company).pack(side="left", padx=3)  # Tworzy przycisk dodawania firmy.
+        self.company_add_button = tk.Button(buttons, text="Dodaj", command=self.add_company)  # Tworzy przycisk dodawania firmy.
+        self.company_add_button.pack(side="left", padx=3)  # Pokazuje przycisk dodawania firmy.
         self.company_edit_button = tk.Button(buttons, text="Edytuj", command=self.edit_company)  # Tworzy przycisk rozpoczecia edycji firmy.
         self.company_edit_button.pack(side="left", padx=3)  # Pokazuje przycisk edycji firmy.
         tk.Button(buttons, text="Usuń", command=self.delete_company).pack(side="left", padx=3)  # Tworzy przycisk usuwania firmy.
@@ -180,7 +181,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.warehouse_city.bind("<KeyRelease>", self.show_warehouse_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
-        tk.Button(buttons, text="Dodaj", command=self.add_warehouse).pack(side="left", padx=3)  # Tworzy przycisk dodawania magazynu.
+        self.warehouse_add_button = tk.Button(buttons, text="Dodaj", command=self.add_warehouse)  # Tworzy przycisk dodawania magazynu.
+        self.warehouse_add_button.pack(side="left", padx=3)  # Pokazuje przycisk dodawania magazynu.
         self.warehouse_edit_button = tk.Button(buttons, text="Edytuj", command=self.edit_warehouse)  # Tworzy przycisk rozpoczecia edycji magazynu.
         self.warehouse_edit_button.pack(side="left", padx=3)  # Pokazuje przycisk edycji magazynu.
         tk.Button(buttons, text="Usuń", command=self.delete_warehouse).pack(side="left", padx=3)  # Tworzy przycisk usuwania magazynu.
@@ -219,7 +221,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         self.employee_city.bind("<KeyRelease>", self.show_employee_city_on_map)  # Uruchamia automatyczne uzupelnianie wspolrzednych po wpisaniu miasta.
         buttons = tk.Frame(left)  # Tworzy panel przyciskow.
         buttons.pack(fill="x", pady=5)  # Pokazuje panel przyciskow.
-        tk.Button(buttons, text="Dodaj", command=self.add_employee).pack(side="left", padx=3)  # Tworzy przycisk dodawania pracownika.
+        self.employee_add_button = tk.Button(buttons, text="Dodaj", command=self.add_employee)  # Tworzy przycisk dodawania pracownika.
+        self.employee_add_button.pack(side="left", padx=3)  # Pokazuje przycisk dodawania pracownika.
         self.employee_edit_button = tk.Button(buttons, text="Edytuj", command=self.edit_employee)  # Tworzy przycisk rozpoczecia edycji pracownika.
         self.employee_edit_button.pack(side="left", padx=3)  # Pokazuje przycisk edycji pracownika.
         tk.Button(buttons, text="Usuń", command=self.delete_employee).pack(side="left", padx=3)  # Tworzy przycisk usuwania pracownika.
@@ -271,48 +274,48 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
 
     def bind_company_edit_fields(self):  # Definiuje funkcje podlaczajaca pola firmy do zmiany przycisku.
         for entry in [self.company_name, self.company_city, self.company_address, self.company_latitude, self.company_longitude]:  # Przechodzi po polach formularza firmy.
-            entry.bind("<KeyRelease>", self.mark_company_changed, add="+")  # Po wpisaniu tekstu sprawdza, czy mozna pokazac przycisk Aktualizuj.
+            entry.bind("<KeyRelease>", self.mark_company_changed, add="+")  # Po wpisaniu tekstu zostawia wlaczony tryb aktualizacji.
 
     def bind_warehouse_edit_fields(self):  # Definiuje funkcje podlaczajaca pola magazynu do zmiany przycisku.
         for entry in [self.warehouse_company_id, self.warehouse_name, self.warehouse_city, self.warehouse_address, self.warehouse_latitude, self.warehouse_longitude]:  # Przechodzi po polach formularza magazynu.
-            entry.bind("<KeyRelease>", self.mark_warehouse_changed, add="+")  # Po wpisaniu tekstu sprawdza, czy mozna pokazac przycisk Aktualizuj.
+            entry.bind("<KeyRelease>", self.mark_warehouse_changed, add="+")  # Po wpisaniu tekstu zostawia wlaczony tryb aktualizacji.
 
     def bind_employee_edit_fields(self):  # Definiuje funkcje podlaczajaca pola pracownika do zmiany przycisku.
         for entry in [self.employee_company_id, self.employee_name, self.employee_position, self.employee_city, self.employee_latitude, self.employee_longitude]:  # Przechodzi po polach formularza pracownika.
-            entry.bind("<KeyRelease>", self.mark_employee_changed, add="+")  # Po wpisaniu tekstu sprawdza, czy mozna pokazac przycisk Aktualizuj.
+            entry.bind("<KeyRelease>", self.mark_employee_changed, add="+")  # Po wpisaniu tekstu zostawia wlaczony tryb aktualizacji.
 
     def mark_company_changed(self, event=None):  # Definiuje funkcje zmieniajaca przycisk firmy po wpisaniu nowych danych.
         if self.selected_company_id is not None and self.company_edit_mode:  # Sprawdza, czy firma jest wybrana i wlaczono tryb edycji.
-            self.company_edit_button.config(text="Aktualizuj", command=self.update_company)  # Zmienia przycisk Edytuj na Aktualizuj.
+            self.company_add_button.config(text="Aktualizuj", command=self.update_company)  # Ustawia przycisk Dodaj jako Aktualizuj.
 
     def mark_warehouse_changed(self, event=None):  # Definiuje funkcje zmieniajaca przycisk magazynu po wpisaniu nowych danych.
         if self.selected_warehouse_id is not None and self.warehouse_edit_mode:  # Sprawdza, czy magazyn jest wybrany i wlaczono tryb edycji.
-            self.warehouse_edit_button.config(text="Aktualizuj", command=self.update_warehouse)  # Zmienia przycisk Edytuj na Aktualizuj.
+            self.warehouse_add_button.config(text="Aktualizuj", command=self.update_warehouse)  # Ustawia przycisk Dodaj jako Aktualizuj.
 
     def mark_employee_changed(self, event=None):  # Definiuje funkcje zmieniajaca przycisk pracownika po wpisaniu nowych danych.
         if self.selected_employee_id is not None and self.employee_edit_mode:  # Sprawdza, czy pracownik jest wybrany i wlaczono tryb edycji.
-            self.employee_edit_button.config(text="Aktualizuj", command=self.update_employee)  # Zmienia przycisk Edytuj na Aktualizuj.
+            self.employee_add_button.config(text="Aktualizuj", command=self.update_employee)  # Ustawia przycisk Dodaj jako Aktualizuj.
 
     def edit_company(self):  # Definiuje funkcje rozpoczynajaca edycje firmy.
         if self.selected_company_id is None:  # Sprawdza, czy wybrano firme z tabeli.
             messagebox.showwarning("Uwaga", "Najpierw wybierz firmę z tabeli")  # Pokazuje komunikat, gdy nie wybrano firmy.
             return  # Przerywa funkcje.
         self.company_edit_mode = True  # Wlacza tryb edycji firmy.
-        messagebox.showinfo("Edycja", "Wprowadź nowe dane w polach formularza. Po zmianie danych przycisk zmieni się na Aktualizuj.")  # Pokazuje instrukcje edycji.
+        self.company_add_button.config(text="Aktualizuj", command=self.update_company)  # Zmienia przycisk Dodaj na Aktualizuj.
 
     def edit_warehouse(self):  # Definiuje funkcje rozpoczynajaca edycje magazynu.
         if self.selected_warehouse_id is None:  # Sprawdza, czy wybrano magazyn z tabeli.
             messagebox.showwarning("Uwaga", "Najpierw wybierz magazyn z tabeli")  # Pokazuje komunikat, gdy nie wybrano magazynu.
             return  # Przerywa funkcje.
         self.warehouse_edit_mode = True  # Wlacza tryb edycji magazynu.
-        messagebox.showinfo("Edycja", "Wprowadź nowe dane w polach formularza. Po zmianie danych przycisk zmieni się na Aktualizuj.")  # Pokazuje instrukcje edycji.
+        self.warehouse_add_button.config(text="Aktualizuj", command=self.update_warehouse)  # Zmienia przycisk Dodaj na Aktualizuj.
 
     def edit_employee(self):  # Definiuje funkcje rozpoczynajaca edycje pracownika.
         if self.selected_employee_id is None:  # Sprawdza, czy wybrano pracownika z tabeli.
             messagebox.showwarning("Uwaga", "Najpierw wybierz pracownika z tabeli")  # Pokazuje komunikat, gdy nie wybrano pracownika.
             return  # Przerywa funkcje.
         self.employee_edit_mode = True  # Wlacza tryb edycji pracownika.
-        messagebox.showinfo("Edycja", "Wprowadź nowe dane w polach formularza. Po zmianie danych przycisk zmieni się na Aktualizuj.")  # Pokazuje instrukcje edycji.
+        self.employee_add_button.config(text="Aktualizuj", command=self.update_employee)  # Zmienia przycisk Dodaj na Aktualizuj.
 
     def fill_tree(self, tree, items, columns):  # Definiuje funkcje wypelniajaca tabele danymi.
         for row in tree.get_children():  # Przechodzi po obecnych wierszach tabeli.
@@ -365,7 +368,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             self.clear_company_form()  # Czysci formularz firmy.
             self.selected_company_id = int(values[0])  # Zapamietuje id wybranej firmy.
             self.company_edit_mode = False  # Wylacza tryb edycji do czasu klikniecia przycisku Edytuj.
-            self.company_edit_button.config(text="Edytuj", command=self.edit_company)  # Ustawia przycisk firmy na tryb Edytuj.
+            self.company_add_button.config(text="Dodaj", command=self.add_company)  # Ustawia przycisk firmy na tryb dodawania.
             self.company_name.insert(0, values[1])  # Wstawia nazwe firmy do formularza.
             self.company_city.insert(0, values[2])  # Wstawia miasto firmy do formularza.
             self.company_address.insert(0, values[3])  # Wstawia adres firmy do formularza.
@@ -382,7 +385,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             self.clear_warehouse_form()  # Czysci formularz magazynu.
             self.selected_warehouse_id = int(values[0])  # Zapamietuje id wybranego magazynu.
             self.warehouse_edit_mode = False  # Wylacza tryb edycji do czasu klikniecia przycisku Edytuj.
-            self.warehouse_edit_button.config(text="Edytuj", command=self.edit_warehouse)  # Ustawia przycisk magazynu na tryb Edytuj.
+            self.warehouse_add_button.config(text="Dodaj", command=self.add_warehouse)  # Ustawia przycisk magazynu na tryb dodawania.
             self.warehouse_company_id.insert(0, values[1])  # Wstawia id firmy do formularza.
             self.warehouse_name.insert(0, values[2])  # Wstawia nazwe magazynu do formularza.
             self.warehouse_city.insert(0, values[3])  # Wstawia miasto magazynu do formularza.
@@ -397,7 +400,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             self.clear_employee_form()  # Czysci formularz pracownika.
             self.selected_employee_id = int(values[0])  # Zapamietuje id wybranego pracownika.
             self.employee_edit_mode = False  # Wylacza tryb edycji do czasu klikniecia przycisku Edytuj.
-            self.employee_edit_button.config(text="Edytuj", command=self.edit_employee)  # Ustawia przycisk pracownika na tryb Edytuj.
+            self.employee_add_button.config(text="Dodaj", command=self.add_employee)  # Ustawia przycisk pracownika na tryb dodawania.
             self.employee_company_id.insert(0, values[1])  # Wstawia id firmy do formularza.
             self.employee_name.insert(0, values[2])  # Wstawia imie i nazwisko do formularza.
             self.employee_position.insert(0, values[3])  # Wstawia stanowisko do formularza.
@@ -424,7 +427,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             return  # Przerywa aktualizacje firmy.
         controller.update_company(self.selected_company_id, self.company_name.get(), self.company_city.get(), self.company_address.get(), latitude, longitude)  # Aktualizuje firme przez kontroler.
         self.clear_company_form()  # Czysci formularz firmy.
-        self.company_edit_button.config(text="Edytuj", command=self.edit_company)  # Ustawia przycisk firmy z powrotem na Edytuj.
+        self.company_add_button.config(text="Dodaj", command=self.add_company)  # Ustawia przycisk firmy z powrotem na Dodaj.
         self.refresh_all_views()  # Odswieza widoki po aktualizacji.
 
     def delete_company(self):  # Definiuje funkcje usuwajaca firme.
@@ -456,7 +459,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             return  # Przerywa aktualizacje magazynu.
         controller.update_warehouse(self.selected_warehouse_id, company_id, self.warehouse_name.get(), self.warehouse_city.get(), self.warehouse_address.get(), latitude, longitude)  # Aktualizuje magazyn przez kontroler.
         self.clear_warehouse_form()  # Czysci formularz magazynu.
-        self.warehouse_edit_button.config(text="Edytuj", command=self.edit_warehouse)  # Ustawia przycisk magazynu z powrotem na Edytuj.
+        self.warehouse_add_button.config(text="Dodaj", command=self.add_warehouse)  # Ustawia przycisk magazynu z powrotem na Dodaj.
         self.refresh_all_views()  # Odswieza widoki po aktualizacji.
 
     def delete_warehouse(self):  # Definiuje funkcje usuwajaca magazyn.
@@ -488,7 +491,7 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
             return  # Przerywa aktualizacje pracownika.
         controller.update_employee(self.selected_employee_id, company_id, self.employee_name.get(), self.employee_position.get(), self.employee_city.get(), latitude, longitude)  # Aktualizuje pracownika przez kontroler.
         self.clear_employee_form()  # Czysci formularz pracownika.
-        self.employee_edit_button.config(text="Edytuj", command=self.edit_employee)  # Ustawia przycisk pracownika z powrotem na Edytuj.
+        self.employee_add_button.config(text="Dodaj", command=self.add_employee)  # Ustawia przycisk pracownika z powrotem na Dodaj.
         self.refresh_all_views()  # Odswieza widoki po aktualizacji.
 
     def delete_employee(self):  # Definiuje funkcje usuwajaca pracownika.
@@ -502,21 +505,21 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
     def clear_company_form(self):  # Definiuje funkcje czyszczaca formularz firmy.
         self.selected_company_id = None  # Usuwa zapamietane id firmy.
         self.company_edit_mode = False  # Wylacza tryb edycji firmy.
-        self.company_edit_button.config(text="Edytuj", command=self.edit_company)  # Ustawia przycisk firmy na Edytuj.
+        self.company_add_button.config(text="Dodaj", command=self.add_company)  # Ustawia przycisk firmy na Dodaj.
         for entry in [self.company_name, self.company_city, self.company_address, self.company_latitude, self.company_longitude]:  # Przechodzi po polach formularza firmy.
             entry.delete(0, tk.END)  # Czysci wybrane pole formularza.
 
     def clear_warehouse_form(self):  # Definiuje funkcje czyszczaca formularz magazynu.
         self.selected_warehouse_id = None  # Usuwa zapamietane id magazynu.
         self.warehouse_edit_mode = False  # Wylacza tryb edycji magazynu.
-        self.warehouse_edit_button.config(text="Edytuj", command=self.edit_warehouse)  # Ustawia przycisk magazynu na Edytuj.
+        self.warehouse_add_button.config(text="Dodaj", command=self.add_warehouse)  # Ustawia przycisk magazynu na Dodaj.
         for entry in [self.warehouse_company_id, self.warehouse_name, self.warehouse_city, self.warehouse_address, self.warehouse_latitude, self.warehouse_longitude]:  # Przechodzi po polach formularza magazynu.
             entry.delete(0, tk.END)  # Czysci wybrane pole formularza.
 
     def clear_employee_form(self):  # Definiuje funkcje czyszczaca formularz pracownika.
         self.selected_employee_id = None  # Usuwa zapamietane id pracownika.
         self.employee_edit_mode = False  # Wylacza tryb edycji pracownika.
-        self.employee_edit_button.config(text="Edytuj", command=self.edit_employee)  # Ustawia przycisk pracownika na Edytuj.
+        self.employee_add_button.config(text="Dodaj", command=self.add_employee)  # Ustawia przycisk pracownika na Dodaj.
         for entry in [self.employee_company_id, self.employee_name, self.employee_position, self.employee_city, self.employee_latitude, self.employee_longitude]:  # Przechodzi po polach formularza pracownika.
             entry.delete(0, tk.END)  # Czysci wybrane pole formularza.
 
