@@ -308,8 +308,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         selected = self.company_tree.focus()  # Pobiera zaznaczony wiersz tabeli.
         if selected:  # Sprawdza, czy jakis wiersz jest zaznaczony.
             values = self.company_tree.item(selected, "values")  # Pobiera wartosci zaznaczonego wiersza.
-            self.selected_company_id = int(values[0])  # Zapamietuje id wybranej firmy.
             self.clear_company_form()  # Czysci formularz firmy.
+            self.selected_company_id = int(values[0])  # Zapamietuje id wybranej firmy.
             self.company_name.insert(0, values[1])  # Wstawia nazwe firmy do formularza.
             self.company_city.insert(0, values[2])  # Wstawia miasto firmy do formularza.
             self.company_address.insert(0, values[3])  # Wstawia adres firmy do formularza.
@@ -323,8 +323,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         selected = self.warehouse_tree.focus()  # Pobiera zaznaczony wiersz tabeli.
         if selected:  # Sprawdza, czy jakis wiersz jest zaznaczony.
             values = self.warehouse_tree.item(selected, "values")  # Pobiera wartosci zaznaczonego wiersza.
-            self.selected_warehouse_id = int(values[0])  # Zapamietuje id wybranego magazynu.
             self.clear_warehouse_form()  # Czysci formularz magazynu.
+            self.selected_warehouse_id = int(values[0])  # Zapamietuje id wybranego magazynu.
             self.warehouse_company_id.insert(0, values[1])  # Wstawia id firmy do formularza.
             self.warehouse_name.insert(0, values[2])  # Wstawia nazwe magazynu do formularza.
             self.warehouse_city.insert(0, values[3])  # Wstawia miasto magazynu do formularza.
@@ -336,8 +336,8 @@ class WarehouseApp:  # Definiuje klase glownego programu GUI.
         selected = self.employee_tree.focus()  # Pobiera zaznaczony wiersz tabeli.
         if selected:  # Sprawdza, czy jakis wiersz jest zaznaczony.
             values = self.employee_tree.item(selected, "values")  # Pobiera wartosci zaznaczonego wiersza.
-            self.selected_employee_id = int(values[0])  # Zapamietuje id wybranego pracownika.
             self.clear_employee_form()  # Czysci formularz pracownika.
+            self.selected_employee_id = int(values[0])  # Zapamietuje id wybranego pracownika.
             self.employee_company_id.insert(0, values[1])  # Wstawia id firmy do formularza.
             self.employee_name.insert(0, values[2])  # Wstawia imie i nazwisko do formularza.
             self.employee_position.insert(0, values[3])  # Wstawia stanowisko do formularza.
